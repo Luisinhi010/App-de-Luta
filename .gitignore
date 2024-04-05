@@ -12,7 +12,3 @@ export/*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-# arquivo oxipng exe, baixe oxipng em https://github.com/shssoichiro/oxipng/releases/latest, copie-o na pasta raiz do projeto e execute o arquivo bat.
-# usado para otimizar imagens sem perder a qualidade.
-oxipng.exe

@@ -7,19 +7,12 @@ import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.system.Capabilities;
-import sys.thread.Thread;
 
 class Main extends Sprite
 {
 	var game:FlxGame;
 
 	public static var fpsVar:FPS;
-
-	public static var gameThreads:Array<Thread> = [];
-	private static var __threadCycle:Int = 0;
-
-	public static function execAsync(func:Void->Void)
-		gameThreads[(__threadCycle++) % gameThreads.length].events.run(func);
 
 	public static function main():Void
 		Lib.current.addChild(new Main());
@@ -44,20 +37,14 @@ class Main extends Sprite
 
 	private function setupGame()
 	{
-		for (i in 0...4)
-		{
-			gameThreads.push(Thread.createWithEventLoop(function()
-			{
-				Thread.current().events.promise();
-			}));
-		}
-		game = new FlxGame(1280, 720, PlayState, #if (flixel < "5.0.0") 1, #end 60, 60, true, false);
+		Util.initThreads();
+		game = new FlxGame(1920, 1080, PlayState, #if (flixel < "5.0.0") 1, #end 60, 60, true, false);
 		addChild(game);
-		// lime.app.Application.current.window.setIcon(lime.utils.Assets.getImage(Paths.image('icon')));
-		// lime.app.Application.current.window.borderless = true;
+		flixel.FlxSprite.defaultAntialiasing = true;
 		FlxG.mouse.visible = FlxG.mouse.useSystemCursor = true;
-		// trace('Monitor Width: ' + Capabilities.screenResolutionX + ', Monitor Height: ' + Capabilities.screenResolutionY);
-		Util.updatewindowres(Std.int(Capabilities.screenResolutionX * .7), Std.int(Capabilities.screenResolutionY * .7));
+
+		// sys.io.File.saveContent("debug.txt", 'x${Capabilities.screenResolutionX * .7} y${Capabilities.screenResolutionY * .7}');
+		// x1344 y756 se o monitor é 1080p...
 
 		// Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 	}
