@@ -73,7 +73,7 @@ class Util
 			case "silver" | "prata":
 				return 0xC0C0C0;
 			case "dark brown" | "marrom escuro":
-				return 0x654321; // Hex color for dark brown
+				return 0x654321;
 			case "burnt orange" | "laranja queimado":
 				return 0xCC5500;
 			case "transparent" | 'trans' | 'transparente':
